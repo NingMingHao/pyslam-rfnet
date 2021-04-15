@@ -66,7 +66,7 @@ if __name__ == "__main__":
                         config.DistCoef, config.cam_settings['Camera.fps'])
 
 
-    num_features=2000  # how many features do you want to detect and track?
+    num_features=400  # how many features do you want to detect and track?
 
     # select your tracker configuration (see the file feature_tracker_configs.py) 
     # LK_SHI_TOMASI, LK_FAST

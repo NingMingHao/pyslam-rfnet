@@ -92,9 +92,14 @@ class RfNetFeature2D:
 
         device = self.device
 
+        original_shape = frame.shape
+        ori_h = original_shape[0]
+        ori_w = original_shape[1]
+
         #output_size = (240, 320) #h, w
-        output_size = (190, 620) #h, w
+        #output_size = (190, 620) #h, w
         #output_size = (95, 310) #h, w
+        output_size = (ori_h, ori_w) #h, w
         img_raw = img = np.expand_dims(frame, -1)
 
         # Rescale

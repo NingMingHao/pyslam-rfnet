@@ -202,6 +202,10 @@ class RFDetModule(nn.Module):
                 None, None, :, :
             ]
         )
+
+        if torch.cuda.is_available():
+            psf = psf.to(torch.device("cuda"))
+
         im1w_score = F.conv2d(
             input=im1w_score.permute(0, 3, 1, 2),
             weight=psf,
