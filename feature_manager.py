@@ -39,6 +39,7 @@ from feature_root_sift import RootSIFTFeature2D
 from feature_shitomasi import ShiTomasiDetector
     
 # import and check 
+RfNetFeature2D = import_from('feature_rfnet', 'RfNetFeature2D')
 SuperPointFeature2D = import_from('feature_superpoint', 'SuperPointFeature2D')         
 TfeatFeature2D = import_from('feature_tfeat', 'TfeatFeature2D')     
 Orbslam2Feature2D = import_from('feature_orbslam2', 'Orbslam2Feature2D')  
@@ -56,6 +57,7 @@ LfNetFeature2D = import_from('feature_lfnet', 'LfNetFeature2D')
 R2d2Feature2D = import_from('feature_r2d2', 'R2d2Feature2D')
 KeyNetDescFeature2D = import_from('feature_keynet', 'KeyNetDescFeature2D')
 DiskFeature2D = import_from('feature_disk', 'DiskFeature2D')
+
 
 kVerbose = True   
 
@@ -455,6 +457,9 @@ class FeatureManager(object):
             #self.keypoint_filter_type = KeyPointFilterTypes.NONE
             #    
             #   
+        elif self.detector_type == FeatureDetectorTypes.RFNET:             
+            self._feature_detector = RfNetFeature2D(num_features=self.num_features)
+
         elif self.detector_type == FeatureDetectorTypes.R2D2:  
             self.need_color_image = True        
             #self.num_levels = - # internally recomputed               
@@ -640,6 +645,12 @@ class FeatureManager(object):
                 self.need_color_image = True           
                 if self.detector_type != FeatureDetectorTypes.LFNET: 
                     raise ValueError("You cannot use LFNET descriptor without LFNET detector!\nPlease, select LFNET as both descriptor and detector!")
+                self._feature_descriptor = self._feature_detector  # reuse detector object                                     
+                #
+                #    
+            elif self.descriptor_type == FeatureDescriptorTypes.RFNET:            
+                if self.detector_type != FeatureDetectorTypes.RFNET: 
+                    raise ValueError("You cannot use RFNET descriptor without RFNET detector!\nPlease, select RFNET as both descriptor and detector!")
                 self._feature_descriptor = self._feature_detector  # reuse detector object                                     
                 #
                 #    
